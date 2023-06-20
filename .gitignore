@@ -1,0 +1,33 @@
+# R
+.Rhistory
+.RData
+.Rproj.user
+*.Rcheck/
+*.Rproj
+.Rproj.user/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+env/
+.venv/
+venv/
+ENV/
+env.bak/
+.egg-info/
+dist/
+build/
+
+# Environment variables
+.env
+.env.*
+
+# Miscellaneous
+.DS_Store
+

@@ -1,0 +1,11 @@
+Package: iitalive
+Type: Package
+Title: Implements IITA Recommendation code for live production.
+Version: 0.1.0
+Author: Gabriel Mutua
+Maintainer: The package maintainer <mutua@arifu.com>
+Description:This package implements IITA recommender engine for live production
+    Currently supporting cassava and maizie in Nigeria. Cassava and sweet potato in Tanzania.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
