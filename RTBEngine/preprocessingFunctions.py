@@ -13,13 +13,13 @@ area: This parameter represents the numeric value of the area to be converted.
 
 The function performs the following conversions based on the areaUnits parameter:
 
-If areaUnits is "ha" (hectares), it assumes that the input area is already in hectares, and it returns the input area value as is.
+1)If areaUnits is "ha" (hectares), it assumes that the input area is already in hectares, and it returns the input area value as is.
 
-If areaUnits is "acre" (acres), it assumes that the input area is in acres and converts it to hectares by dividing it by the conversion factor of 2.47105 (since 1 acre is approximately 2.47105 hectares).
+2)If areaUnits is "acre" (acres), it assumes that the input area is in acres and converts it to hectares by dividing it by the conversion factor of 2.47105 (since 1 acre is approximately 2.47105 hectares).
 
-If areaUnits is any other value, it assumes that the input area is in square meters and converts it to hectares by dividing it by 10,000 (since 1 hectare is 10,000 square meters).
+3)If areaUnits is any other value, it assumes that the input area is in square meters and converts it to hectares by dividing it by 10,000 (since 1 hectare is 10,000 square meters).
 
-Finally, the function returns the converted area in hectares (areaHa).
+4)Finally, the function returns the converted area in hectares (areaHa).
 """
 
 def areaHA_function(areaUnits, area):
@@ -47,21 +47,21 @@ cassUP_m1, cassUP_m2, cassUP_p1, cassUP_p2: Numeric parameters representing quan
 
 The function performs the following steps:
 
-It defines conversion factors for different types of cassava products (e.g., roots, chips, flour, gari) in a dictionary called conversion_factors.
+1)It defines conversion factors for different types of cassava products (e.g., roots, chips, flour, gari) in a dictionary called conversion_factors.
 
-It defines default quantities of cassava products for Nigeria (NG) and Tanzania (TZ) in a dictionary called cassUP_defaults.
+2)It defines default quantities of cassava products for Nigeria (NG) and Tanzania (TZ) in a dictionary called cassUP_defaults.
 
-It calculates the conversion factor based on the specified cassPD. If cassPD is not specified or not found in the dictionary, the default conversion factor is set to 1.
+3)It calculates the conversion factor based on the specified cassPD. If cassPD is not specified or not found in the dictionary, the default conversion factor is set to 1.
 
-It checks if cassUW is either 0 or None, and if so, it sets it to 1000 (assuming a default weight of 1000 kilograms).
+4)It checks if cassUW is either 0 or None, and if so, it sets it to 1000 (assuming a default weight of 1000 kilograms).
 
-It checks if cassUP is None and if the country is in the cassUP_defaults dictionary for the specified cassPD. If both conditions are met, it sets cassUP to the default value specified for the country.
+5)It checks if cassUP is None and if the country is in the cassUP_defaults dictionary for the specified cassPD. If both conditions are met, it sets cassUP to the default value specified for the country.
 
-It calculates rootUP, which represents the conversion of cassava product quantity to units per kilogram, taking into account the conversion factor and weight.
+6)It calculates rootUP, which represents the conversion of cassava product quantity to units per kilogram, taking into account the conversion factor and weight.
 
-It calculates similar conversions for rootUP_m1, rootUP_m2, rootUP_p1, and rootUP_p2, which represent quantities at different processing stages.
+7)It calculates similar conversions for rootUP_m1, rootUP_m2, rootUP_p1, and rootUP_p2, which represent quantities at different processing stages.
 
-It stores these calculated values in a list called rootUP_All.
+8)It stores these calculated values in a list called rootUP_All.
 
 Finally, it returns the list of conversion values.
 """
