@@ -311,3 +311,30 @@ def fcy_preprocessing(FCY, areaUnits, area):
         FCY = FCY * area if areaUnits == "ha" else FCY * (2.47105 * area)
 
     return FCY
+
+'''
+The response_trans function in Python is designed to handle the transformation of values, typically numeric ones, and return them in a more standardized format. Here's what this function does step by step:
+
+It takes a value as input, which can be of any data type.
+The value is converted to a string using str(value) to ensure that it's in string format.
+It then tries to convert the string back to a numeric value using float(value) within a try block.
+If the conversion is successful (i.e., the value is numeric), it checks whether the numeric value is either zero or NaN (Not-a-Number) using math.isnan(transformed_value) and transformed_value == 0.
+If the value is zero or NaN, it sets transformed_value to None to represent missing or undefined data, similar to the concept of "NA" in R.
+If the conversion to numeric fails due to a ValueError, it also sets transformed_value to None.
+Finally, it returns the transformed value.
+'''
+def response_trans(value):
+    # Convert value to string
+    value = str(value)
+    
+    try:
+        # Attempt to convert value to numeric
+        transformed_value = float(value)
+        
+        # Set default value to NA if value is zero or NA
+        if math.isnan(transformed_value) or transformed_value == 0:
+            transformed_value = None
+    except ValueError:
+        transformed_value = None
+    
+    return transformed_value
