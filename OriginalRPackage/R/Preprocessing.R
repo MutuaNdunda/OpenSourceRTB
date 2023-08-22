@@ -85,6 +85,7 @@ cost_lmo_creation <- function(areaUnits, cost_LMO_areaBasis, tractor_plough,trac
   if(is.na(cost_tractor_ridging)   & tractor_ridger & country == "NG") costLMO[costLMO$operation=="ridging"   & costLMO$method=="tractor",]$costHa <- 6000 * 2.47105
   if(is.na(cost_weeding1) & country == "NG")                           costLMO[costLMO$operation=="weeding1", ]$costHa                             <- 12500 * 2.47105
   if(is.na(cost_weeding2) & country == "NG")                           costLMO[costLMO$operation=="weeding2", ]$costHa                             <- 12500 * 2.47105
+  
   if(is.na(cost_manual_ploughing) & country == "TZ")                   costLMO[costLMO$operation=="ploughing" & costLMO$method=="manual" ,]$costHa <- 432433.9
   if(is.na(cost_manual_ridging) & country == "TZ")                     costLMO[costLMO$operation=="ridging"   & costLMO$method=="manual" ,]$costHa <- 555986.2
   if(is.na(cost_tractor_ploughing) & tractor_plough & country == "TZ") costLMO[costLMO$operation=="ploughing" & costLMO$method=="tractor",]$costHa <- 370657.5
