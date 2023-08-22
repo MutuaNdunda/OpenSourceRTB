@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 
+import math
 """
 The areaHA_function is a function that converts an area from one unit (acres or hectares) to another unit (hectares). It takes two parameters as input:
 
