@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 """
-The areaHA_function is a Python function that converts an area from one unit (acres or hectares) to another unit (hectares). It takes two parameters as input:
+The areaHA_function is a function that converts an area from one unit (acres or hectares) to another unit (hectares). It takes two parameters as input:
 
 areaUnits: This parameter represents the unit of the input area and is expected to be a string. It can take three possible values:
 
@@ -33,7 +33,7 @@ def areaHA_function(areaUnits, area):
 
 
 """
-This function, root_conversion, is a Python function that calculates and returns conversion values related to cassava processing. It takes several parameters as input, but most of them have default values, making them optional. Here's a breakdown of what this function does:
+This function, root_conversion, is a function that calculates and returns conversion values related to cassava processing. It takes several parameters as input, but most of them have default values, making them optional. Here's a breakdown of what this function does:
 
 country: A string parameter representing the country for which the conversion is being calculated.
 
@@ -118,7 +118,7 @@ def root_conversion(country, cassPD="roots", cassUP=None, cassUW=None, cassUP_m1
 
 
 '''
-This Python function, cost_lmo_creation, is designed to create a DataFrame that contains cost-related information for various agricultural operations in different countries. Here's a breakdown of what this function does:
+cost_lmo_creation fucntion, is designed to create a DataFrame that contains cost-related information for various agricultural operations in different countries. Here's a breakdown of what this function does:
 
 It takes several parameters as input, including areaUnits, cost_LMO_areaBasis, cost_manual_ploughing, cost_manual_ridging, cost_tractor_ploughing, cost_tractor_ridging, cost_weeding1, cost_weeding2, areaHa, and country.
 
@@ -183,7 +183,7 @@ def cost_lmo_creation(areaUnits, cost_LMO_areaBasis, cost_manual_ploughing, cost
     return costLMO
 
 '''
-This Python function, fertilizer_input, is designed to create a Pandas DataFrame containing information about fertilizer prices and nutrient contents based on input values for urea, NPK (Nitrogen, Phosphorus, Potassium), and DAP (Diammonium Phosphate) prices. Here's a breakdown of what this function does:
+Fertilizer_input fucntion, is designed to create a Pandas DataFrame containing information about fertilizer prices and nutrient contents based on input values for urea, NPK (Nitrogen, Phosphorus, Potassium), and DAP (Diammonium Phosphate) prices. Here's a breakdown of what this function does:
 
 urea_price, npk_price, dap_price: These parameters represent the prices of urea, NPK, and DAP fertilizers, respectively.
 
@@ -271,7 +271,7 @@ def fertilizer_input(urea_price, npk_price, dap_price, country):
         print("\nKindly check the input for country\n")
 
 '''
-This Python function, fcy_preprocessing, is designed to preprocess a farm's current yield (FCY) based on the provided area and area units. Here's a breakdown of what this function does:
+FCY preprocesing, is designed to preprocess a farm's current yield (FCY) based on the provided area and area units. Here's a breakdown of what this function does:
 
 FCY: This parameter represents the farm's current yield, which is a numeric value.
 
