@@ -37,6 +37,28 @@ cost_weeding2 = NA
 areaHa = areaHA_function('ha',5)    
 country = "NG"
 
+
+areaUnits = 'ha'
+area = 14
+FCY = 90
+access_tractor = T
+cassUP = 45000
+cassUW= 1000
+ploughing=T
+ridging= T
+method_ploughing= 'manual'
+method_ridging= 'tractor'
+cost_manual_ploughing= 45000
+cost_manual_ridging=45000
+cost_tractor_ploughing=67000
+cost_tractor_ridging=89000
+cost_weeding1=NA
+cost_weeding2=NA
+weeding=NA
+country= 'NG'
+custom_area = NA
+
+
 cost_lmo_creation <- function(areaUnits, cost_LMO_areaBasis, tractor_plough, tractor_ridger, cost_manual_ploughing, cost_manual_ridging, cost_tractor_ploughing, cost_tractor_ridging, cost_weeding1, cost_weeding2, areaHa, country) {
   
   costLMO <- data.frame(
