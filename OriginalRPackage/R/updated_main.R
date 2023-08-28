@@ -115,3 +115,97 @@ getpprecommendations <- function(areaUnits,area,
   
   return(ds)
 }
+
+getPPText <- function(ds,country, id){
+  library(stringr)
+  #We may want to change method_ploughing and method_ridging to character in the getPPrecommendations function?
+  ds$method_ploughing <- as.character(ds$method_ploughing)
+  ds$method_ridging   <- as.character(ds$method_ridging)
+  
+  pp_rec_text = read.csv("pp_text.csv")
+  
+  if(ds[1,]$CP){
+    
+    firsr_rec  = pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 1),6]
+    if(ds[1, ]$method_ploughing == "N/A"){
+      rec_plough = pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 2),6]
+    }else if(ds[1, ]$method_ploughing == "manual"){
+      rec_plough = pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 3),6]
+    }else if (ds[1, ]$method_ploughing == "tractor"){
+      rec_plough = pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 4),6]
+    } 
+    
+    if(ds[1, ]$method_ridging == "N/A"){
+      rec_ridge = pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 5),6]
+      rec_ridge = paste(" ",rec_ridge)
+    }else if (ds[1, ]$method_ridging == "manual"){
+      rec_ridge = pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 6),6]
+      rec_ridge = paste(" ",rec_ridge)
+    } else if (ds[1, ]$method_ridging == "tractor"){
+      rec_ridge = pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 7),6]
+      rec_ridge = paste(" ",rec_ridge)
+    }
+    
+    last_rec  =  pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 8),6]
+    rec = paste0(firsr_rec, rec_plough, rec_ridge, last_rec)
+    
+  }else{
+    
+    if(ds[1, ]$ploughing & ds[1, ]$ridging)   {recT <- paste(pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 9),6], ds[1, ]$method_ploughing,  pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 10),6], ds[1, ]$method_ridging, pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 11),6])}
+    if(ds[1, ]$ploughing & !ds[1, ]$ridging)  {recT <- paste(pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 9),6], ds[1, ]$method_ploughing, pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 12),6])}
+    #Handling third case
+    if(!ds[1, ]$ploughing & ds[1, ]$ridging){
+      recT_first <- pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 13),6]
+      
+      if (ds[1, ]$method_ridging == "manual"){
+        recT_sec = pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 14),6]
+      }else{
+        recT_sec = pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 15),6]
+      }
+      recT_third = pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 16),6]
+      
+      recT = paste(recT_first, recT_sec, recT_third)
+      #print(recT)   
+    }
+    
+    if(!ds[1, ]$ploughing & !ds[1, ]$ridging) {recT <- pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 17),6]}
+    
+    currency <- ifelse(country == "NG", "NGN", "TZS")
+    changeTC <- ds[1, ]$dTC
+    dTC <- formatC(signif(abs(ds[1, ]$dTC), digits=3), format="f", big.mark=",", digits=0)
+    dNR <- formatC(signif(ds[1, ]$dNR, digits=3), format="f", big.mark=",", digits=0)
+    dRP <- signif(ds[1, ]$dRP, digits=2)
+    
+    if(dTC == 0){
+      recC <- pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 18),6]
+    }else{
+      #change decrease increase for swahili language
+      if (id == 2){
+        decrease  = "itapunguza"
+        increase = "itaongeza"
+      } else{
+        decrease  = pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 24),6]
+        increase =  pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 25),6]
+      }
+      recC <- paste(pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 19),6], ifelse(changeTC  < 0, decrease, increase), pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 20),6], currency, " ", dTC, ". ")
+    }
+    
+    if(dRP == 0 & dNR == 0) {recP <- pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 21),6]}
+    if(dRP == 0 & dNR > 0)  {recP <- paste(pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 22),6], currency, " ", dNR, ".")}
+    if(dRP != 0 & dNR == 0) {recP <- paste(pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 23),6], ifelse(ds[1, ]$TC < 0, pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 24),6], pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 25),6]), pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 26),6], dRP, pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 27),6], ", ",pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 29),6],
+                                           pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 28),6])}
+    if(dRP != 0 & dNR != 0) {recP <- paste(pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 23),6], ifelse(ds[1, ]$TC < 0, pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 24),6], pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 25),6]), pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 26),6], dRP, pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 27),6], ifelse(ds[1, ]$TC < 0, pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 29),6], pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 30),6]),
+                                           pp_rec_text[(pp_rec_text$lang_id == id & pp_rec_text$rec_part == 31),6], currency, " ", dNR)}
+    
+    rec <- paste0(recT, recC, recP)
+  }
+  
+  #TODO: This only provides the minimal information to return to the user. We may consider adding following information:
+  #1. Beware that planting on flat may not be advisable in your specific conditions. You should ridge if the land is sometimes very wet (water-logging problems), if controlling weed is very challenging, if the soil is very clayey, or if you plan to harvest during the dry season.
+  #2. We currently do not consider costs and benefits of harrowing - we have not investigated this.
+  #3. Explicit reasons underlying recommendations (driven by cost-saving or revenue increase).
+  #4. Our selection of the best option may differ from the one by the farmer. A farmer may be willing to choose an option that has a lower net revenue change than the recommended, but also a lower cost.
+  #5. Possible issues with the input data - especially if user provides unrealistic prices.
+  rec <- str_squish(rec)
+  return(rec)
+}

@@ -1,6 +1,7 @@
 import math
 import pandas as pd
 from preprocessingFunctions import areaHA_function,root_conversion,cost_lmo_creation,fcy_preprocessing,response_trans
+from rendertext import get_PP_text as renderText
 
 #Testing get Planting practice recommendation
 areaUnits = 'ha'
@@ -21,6 +22,7 @@ cost_weeding1=None
 cost_weeding2=None
 weeding=None
 country= 'NG'
+
 
 def getpprecommendations(areaUnits, area, custom_area, FCY, access_tractor,
                          cassUP, cassUW=None, ploughing=None, ridging=None,
@@ -130,3 +132,28 @@ def getpprecommendations(areaUnits, area, custom_area, FCY, access_tractor,
     ds["dNR"] = ds["NR"] - ds[ds["CP"]]["NR"].values[0]
 
     return ds
+
+ds = getpprecommendations(
+    areaUnits = 'ha',
+    area = 14,
+    FCY = 90,
+    access_tractor = True,
+    cassUP = 45000,
+    cassUW= 1000,
+    ploughing=True,
+    ridging= True,
+    method_ploughing= 'manual',
+    method_ridging= 'tractor',
+    cost_manual_ploughing= 45000,
+    cost_manual_ridging=45000,
+    cost_tractor_ploughing=67000,
+    cost_tractor_ridging=89000,
+    cost_weeding1=None,
+    cost_weeding2=None,
+    weeding=None,
+    custom_area= None,
+    country= 'NG')
+
+id = 1
+
+renderText(ds,country,id)
